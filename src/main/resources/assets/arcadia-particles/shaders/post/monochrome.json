@@ -1,0 +1,15 @@
+{
+  "vertex": "arcadia-particles:post/monochrome",
+  "fragment": "arcadia-particles:post/monochrome",
+  "samplers": [
+    {"name": "Sampler0"}
+  ],
+  "uniforms": [
+      {
+        "name": "floated", 
+        "type": "float",
+        "count": 1,
+        "values": [1.0]
+      }
+    ]
+}
