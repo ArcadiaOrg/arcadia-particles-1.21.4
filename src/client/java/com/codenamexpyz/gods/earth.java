@@ -19,7 +19,7 @@ import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 public class earth {
     private static final List<ParticleEffect> particleList = Arrays.asList(ParticleTypes.SPORE_BLOSSOM_AIR, ParticleTypes.SPORE_BLOSSOM_AIR);
 
-    private static double deg = 0; //Exists for the sake of the scheduler
+    private static double deg = 0; //Exists for the sake of the counter
 
     public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
         Vec3d loc = godEntity.getPos();
@@ -27,14 +27,14 @@ public class earth {
         if (!mc.player.getName().equals(godEntity.getName())) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    
+                    new ParticleAura(loc, new Vec3d(3, 4, 3), new Vec3d(0, 0.21, 0), particleList, uniqueColorAura(loc, godEntity), 1000000).tick();
+
                     orbit(loc, ParticleTypes.FLAME, godEntity.getYaw(), 1, 180, false, false);
                     orbit(loc, ParticleTypes.RAIN, godEntity.getYaw(), 1, 0, false, false);
                     orbit(loc, ParticleTypes.ASH, godEntity.getYaw(), 1, 180, false, true);
                     orbit(loc, ParticleTypes.WAX_ON, godEntity.getYaw(), 1, 0, false, true);
-                    new ParticleAura(loc, new Vec3d(2, 3, 2), new Vec3d(0, 0.21, 0), particleList, uniqueColorAura(loc, godEntity), 50000);
 
-                    deg += 4;
+                    deg += 2;
                     deg = deg % 360;
                 }
             }
@@ -58,7 +58,7 @@ public class earth {
 
 
 
-    private static void orbit(Vec3d loc, ParticleEffect particleType, double yaw, double radius, double degOffset, boolean invert, boolean rotCircle) {
+    private static void orbit(Vec3d loc, ParticleEffect particleType, double yaw, double radius, double degOffset, boolean invert, boolean rotCircle) { //I'm lazy
         double angle = (invert) ? Math.toRadians(deg + degOffset) : -Math.toRadians(deg + degOffset);
         double xOffset = Math.cos(angle) * radius/2;
         double zOffset = Math.sin(angle) * radius/1.5;

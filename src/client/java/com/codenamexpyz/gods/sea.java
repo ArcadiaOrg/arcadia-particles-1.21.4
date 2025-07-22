@@ -28,9 +28,9 @@ public class sea {
         if (!mc.player.getName().equals(godEntity.getName())) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0.1, 0), particleList, 1000000);
-                    new ParticleTrail(loc, player, ParticleTypes.FALLING_WATER, 10, 0, 0);
-                    new CircleParticleObject(loc.add(0, 2, 0), haloParticleList, colorList, 2, 1, 0.5, new Vec3d(0,-player.getYaw(),0), i);
+                    new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0.1, 0), particleList, 5000000).tick();
+                    ParticleTrail.UniqueParticleTrail(loc, player, ParticleTypes.END_ROD, null, 10, 1f, 0);
+                    new CircleParticleObject(loc.add(0, 2, 0), haloParticleList, colorList, 6, 1, 0.5, 0.5, new Vec3d(0,-player.getYaw(),0), i, false);
                     i++;
                     i = i % 360;
                 }

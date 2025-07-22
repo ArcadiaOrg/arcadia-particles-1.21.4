@@ -38,12 +38,12 @@ public class ParticleManager {
                 sea.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            /*if (player.getName().getLiteralString().equals("")) {
+            if (player.getName().getLiteralString().equals("WadeBox")) {
                 fury.triggerParticles(nearbyPlayerEntities, player);
-            }*/
+            }
 
             if (player.getName().getLiteralString().equals(mc.player.getName().getString())) { //for testing
-                fury.triggerParticles(nearbyPlayerEntities, player);
+                sea.triggerParticles(nearbyPlayerEntities, player);
             }
         }
     }
