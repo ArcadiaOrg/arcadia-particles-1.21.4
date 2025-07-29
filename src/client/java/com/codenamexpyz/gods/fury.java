@@ -14,15 +14,22 @@ import com.codenamexpyz.utils.SoundMaker;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DustColorTransitionParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.Vec3d;
 
 public class fury {
-    private static double i = 0; //Count
+    //Unique heartbeat variables
+    private static double i = 0; //Heartbeat count
     private static double k = 0; //For the fading
     private static boolean close = false;
 
+    //Objects used. Only needs to be declaired once for ticking sake.
+    private static ParticleBurn<? extends ParticleEffect> cloak;
+
     public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
         Vec3d loc = godEntity.getPos();
+
+        cloak = new ParticleBurn<DustColorTransitionParticleEffect>(godEntity, new DustColorTransitionParticleEffect(new Color(1, 1, 1).getRGB(), new Color(192,192,192).getRGB(), 0.5f), 100);
 
         if (!mc.player.getName().equals(godEntity.getName())) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
@@ -67,8 +74,8 @@ public class fury {
                         SoundMaker.heatbeat((float)(k/fadeVal), i, 400);
                     } else SoundMaker.heatbeat((float)(k/fadeVal), i, 200);
                     
-                    new ParticleBurn(loc.add(0, 1.4, 0), godEntity, new DustColorTransitionParticleEffect(new Color(1, 1, 1).getRGB(), new Color(192,192,192).getRGB(), 0.5f), 100); //cloak
-
+                    cloak.tick();
+                    
                     i++;
                     i = i % 1200;
                 }

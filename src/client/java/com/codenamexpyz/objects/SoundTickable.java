@@ -6,10 +6,10 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 
-public class WhisperSoundTickable extends MovingSoundInstance {
+public class SoundTickable extends MovingSoundInstance {
     private final PlayerEntity victim;
 
-    public WhisperSoundTickable(PlayerEntity victim, SoundEvent soundEvent, SoundCategory soundCategory) {
+    public SoundTickable(PlayerEntity victim, SoundEvent soundEvent, SoundCategory soundCategory) {
         super(soundEvent, soundCategory, SoundInstance.createRandom());
 		this.victim = victim;
 		this.volume = 0.1f;

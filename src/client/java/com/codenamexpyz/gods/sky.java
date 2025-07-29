@@ -19,20 +19,25 @@ import com.codenamexpyz.utils.SplashManager;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 public class sky {
+    //Particle and color collections
     private static final List<ParticleEffect> particleList = Arrays.asList(ParticleTypes.END_ROD, ParticleTypes.ELECTRIC_SPARK);
     private static final List<Color> colorList = Arrays.asList(new Color(255/255, 255/255, 0), new Color(255/255, 255/255, 255/255)); //Gold and white
 
+    //Objects used. Only needs to be declaired once for ticking sake.
+    private static CircleParticleObject halo;
+
     //For landing tracking
     private static double timeOffGround = 0;
-    private static double i = 0; //Count
 
     public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
         Vec3d loc = godEntity.getPos();
 
+        halo = new CircleParticleObject(loc.add(0, 2, 0), particleList, colorList, 26, 0.5, 0.5, new Vec3d(0, -godEntity.getHeadYaw(), 0), false);
+
         if (!mc.player.getName().equals(godEntity.getName())) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    new CircleParticleObject(loc.add(0, 2, 0), particleList, colorList, 26, 0, 0.5, 0.5, new Vec3d(0, -godEntity.getHeadYaw(), 0), i, false);
+                    halo.tick(loc);
                     ParticleTrail.UniqueParticleTrail(loc, player, ParticleTypes.CLOUD, null, 20, 0.4f, 1.5f);
 
                     if (godEntity.isOnGround() && (timeOffGround >= 13 + ((mc.getCurrentFps() >= 60) ? 60 : mc.getCurrentFps()))) {  //ITS PER FRAMERATE NOW IT NEEDS TO WORK PLEASEEEE
@@ -40,9 +45,6 @@ public class sky {
                     }
 
                     timeOffGround = (godEntity.isOnGround()) ? 0 : timeOffGround + 1; //This is a crazy check that makes it only run once, and only if it's a sizable fall
-
-                    i++;
-                    i = i % 360;
                 }
             }
         }

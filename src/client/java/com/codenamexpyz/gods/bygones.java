@@ -12,7 +12,7 @@ import com.codenamexpyz.utils.Rotator;
 import com.codenamexpyz.objects.CircleParticleObject;
 import com.codenamexpyz.objects.ParticleAura;
 import com.codenamexpyz.objects.ParticleTrail;
-import com.codenamexpyz.objects.WhisperSoundTickable;
+import com.codenamexpyz.objects.SoundTickable;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.particle.Particle;
@@ -27,29 +27,34 @@ import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 import static com.codenamexpyz.ArcadiaParticles.whispersEvent;
 
 public class bygones {
+    //Particle collections and thread-based randomizer
     private static ThreadLocalRandom rand = ThreadLocalRandom.current();
     private static final List<BlockStateParticleEffect> particleList = Arrays.asList(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GRAY_STAINED_GLASS.getDefaultState()), new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState()));
-    private static WhisperSoundTickable whisper;
-    private static boolean once = true;
+    
+    //For the fading and sound logic
+    private static SoundTickable whisper = new SoundTickable(mc.player, whispersEvent, SoundCategory.MASTER);
     private static boolean faded = false;
-    private static double i = 0; //Count
-    private static double k = 0; //For the fading
+    private static double k = 0; 
+
+    //Objects used. Only needs to be declaired once for ticking sake.
+    private static CircleParticleObject halo;
+    private static ParticleAura glassAura;
+    private static ParticleTrail glassTrail;
 
     public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
         Vec3d loc = godEntity.getPos();
 
+        halo = new CircleParticleObject(loc.add(0, 2, 0), particleList, null, 60, 0.2, 0.5, new Vec3d(-20, -godEntity.getHeadYaw(), 0), true);
+        glassAura = new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0, 0), particleList, 3000000);
+        glassTrail = new ParticleTrail(loc, -godEntity.getYaw(), particleList, true, 20);
+
         if (!mc.player.getName().equals(godEntity.getName())) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    double dist = new Vector2d(mc.player.getX(), mc.player.getZ()).distance(0, 0);
+                    double dist = new Vector2d(mc.player.getX(), mc.player.getZ()).distance(loc.x, loc.z);
                     double maxDist = 40;
                     double fadeVal = 180;
                     double modifier = 0.15;
-
-                    if (once) {
-                        whisper = new WhisperSoundTickable(player, whispersEvent, SoundCategory.MASTER);
-                        once = !once;
-                    }
 
                     if (dist < maxDist && !mc.getSoundManager().isPlaying(whisper)) {
                         mc.getSoundManager().play(whisper);
@@ -89,19 +94,16 @@ public class bygones {
                         }
                     }
                     
-                    new CircleParticleObject(loc.add(0, 2, 0), particleList, null, 60, 0, 0.2, 0.5, new Vec3d(-20, -godEntity.getHeadYaw(), 0), i, true);
                     visorHandle(godEntity);
-                    new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0, 0), particleList, 3000000).tick();;
-                    if (godEntity.isOnGround() && rand.nextInt(5) == 0) new ParticleTrail(loc, -godEntity.getYaw(), particleList, true, 20); //Ground trail handle
+                    halo.tick(loc);
+                    glassAura.tick();
+                    if (godEntity.isOnGround() && rand.nextInt(5) == 0) glassTrail.tick(); //Ground trail handle
                 }
             }
         }
-
-        i++;
-        i = i % 360;
     }
 
-    private static void visorHandle(PlayerEntity player) {  //Unique
+    private static void visorHandle(PlayerEntity player) { //Unique
         Vec3d loc = player.getEyePos();
 
         double pitch = player.getPitch();

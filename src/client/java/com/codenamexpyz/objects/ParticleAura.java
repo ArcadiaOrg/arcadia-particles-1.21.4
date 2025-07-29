@@ -19,8 +19,6 @@ public class ParticleAura {
     private final List<? extends ParticleEffect> particleList;
     private final List<Vec3d> colorList;
     private final int randVal;
-    
-
 
     public ParticleAura(Vec3d loc, Vec3d radius, Vec3d veloc, List<? extends ParticleEffect> particleList, int randVal) {
         this.loc = loc;
