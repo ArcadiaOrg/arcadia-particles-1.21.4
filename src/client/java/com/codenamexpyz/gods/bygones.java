@@ -95,7 +95,7 @@ public class bygones {
                     }
                     
                     visorHandle(godEntity);
-                    halo.tick(loc);
+                    halo.tick(loc.add(0, 2, 0));
                     glassAura.tick();
                     if (godEntity.isOnGround() && rand.nextInt(5) == 0) glassTrail.tick(); //Ground trail handle
                 }
