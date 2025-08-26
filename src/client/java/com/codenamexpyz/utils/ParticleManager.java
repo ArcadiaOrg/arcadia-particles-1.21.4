@@ -17,6 +17,8 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 
+//import static com.codenamexpyz.ArcadiaParticlesClient.mc;
+
 public class ParticleManager {
     public static void handleParticles() {
         List<PlayerEntity> nearbyPlayerEntities = PlayerUtils.getNearbyPlayers();
