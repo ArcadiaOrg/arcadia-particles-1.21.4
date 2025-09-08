@@ -12,9 +12,9 @@ import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.Vec3d;
 
 import com.codenamexpyz.objects.CircleParticleObject;
-import com.codenamexpyz.objects.ParticleSplash;
 import com.codenamexpyz.objects.ParticleTrail;
-import com.codenamexpyz.utils.SplashManager;
+import com.codenamexpyz.objects.ParticleSplash.ParticleSplash;
+import com.codenamexpyz.objects.ParticleSplash.SplashManager;
 
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 

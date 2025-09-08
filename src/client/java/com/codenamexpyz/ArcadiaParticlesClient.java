@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.codenamexpyz.networking.packetManager;
+import com.codenamexpyz.objects.ParticleSplash.SplashManager;
 import com.codenamexpyz.utils.Keybinds;
 import com.codenamexpyz.utils.ParticleManager;
-import com.codenamexpyz.utils.SplashManager;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.client.MinecraftClient;
 
 public class ArcadiaParticlesClient implements ClientModInitializer {
@@ -32,12 +31,6 @@ public class ArcadiaParticlesClient implements ClientModInitializer {
 			}
 		});
 
-		ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
-			packetManager.hasMod(true);
-		});
-
-		ServerPlayConnectionEvents.DISCONNECT.register((handler, server) -> {
-			packetManager.hasMod(false);
-		});
+		
 	}
 }

@@ -9,8 +9,8 @@ import org.joml.Vector2d;
 import java.awt.Color;
 
 import com.codenamexpyz.objects.ParticleBurn;
+import com.codenamexpyz.objects.SoundObjects.SoundMaker;
 import com.codenamexpyz.utils.RenderManager;
-import com.codenamexpyz.utils.SoundMaker;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DustColorTransitionParticleEffect;

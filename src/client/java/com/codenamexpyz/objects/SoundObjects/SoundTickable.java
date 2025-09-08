@@ -1,4 +1,4 @@
-package com.codenamexpyz.objects;
+package com.codenamexpyz.objects.SoundObjects;
 
 import net.minecraft.client.sound.MovingSoundInstance;
 import net.minecraft.client.sound.SoundInstance;

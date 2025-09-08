@@ -1,9 +1,11 @@
-package com.codenamexpyz.objects;
+package com.codenamexpyz.objects.StarParticles;
 
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 import java.util.List;
 import java.util.Random;
+
+import com.codenamexpyz.objects.CircleParticleObject;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.player.PlayerEntity;

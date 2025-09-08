@@ -1,4 +1,4 @@
-package com.codenamexpyz.utils;
+package com.codenamexpyz.objects.SoundObjects;
 
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 

@@ -12,7 +12,7 @@ import com.codenamexpyz.utils.Rotator;
 import com.codenamexpyz.objects.CircleParticleObject;
 import com.codenamexpyz.objects.ParticleAura;
 import com.codenamexpyz.objects.ParticleTrail;
-import com.codenamexpyz.objects.SoundTickable;
+import com.codenamexpyz.objects.SoundObjects.SoundTickable;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.client.particle.Particle;

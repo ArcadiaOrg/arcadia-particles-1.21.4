@@ -1,9 +1,7 @@
-package com.codenamexpyz.utils;
+package com.codenamexpyz.objects.ParticleSplash;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.codenamexpyz.objects.ParticleSplash;
 
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.particle.ParticleEffect;

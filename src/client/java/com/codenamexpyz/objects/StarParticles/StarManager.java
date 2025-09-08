@@ -1,10 +1,8 @@
-package com.codenamexpyz.utils;
+package com.codenamexpyz.objects.StarParticles;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
-import com.codenamexpyz.objects.StarParticle;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleEffect;
