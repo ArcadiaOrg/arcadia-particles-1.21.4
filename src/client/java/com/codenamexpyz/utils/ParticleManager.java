@@ -1,5 +1,7 @@
 package com.codenamexpyz.utils;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class ParticleManager {
             }
 
             if (player.getName().getLiteralString().equals("xpyz")) { //for testing mc.player.getName().getString()
-                if (StarManager.getNumOfStars() < 3) {
+                if (StarManager.getNumOfStars() < 0 && config.playerPacketSettings.toggleArtifice) {
                     StarManager.addStar(
                         new StarParticle<ParticleEffect>(
                             new Vec3d(0, 0, 0), 

@@ -1,0 +1,31 @@
+{
+    "category.codenamexpyz.arcadiaparticles": "Arcadia Particles",
+    "text.autoconfig.arcadia-particles.title": "Arcadia Particles Config",
+
+    "text.autoconfig.arcadia-particles.category.God Settings": "God Settings",
+    "text.autoconfig.arcadia-particles.category.Accessibility Settings": "Accessibility Settings",
+    "text.autoconfig.arcadia-particles.category.Player and Packet Settings": "Player and Packet Settings",
+
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleBygones": "Bygones particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleBygones.@Tooltip": "Toggle Bygones particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleDecay": "Decay Particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleDecay.@Tooltip": "Toggle Decay particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleEarth": "Earth Particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleEarth.@Tooltip": "Toggle Earth particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleFury": "Fury Particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleFury.@Tooltip": "Toggle Fury particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleSea": "Sea Particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleSea.@Tooltip": "Toggle Sea particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleSky": "Sky Particles",
+    "text.autoconfig.arcadia-particles.option.godSettings.toggleSky.@Tooltip": "Toggle Sky particles",
+
+    "text.autoconfig.arcadia-particles.option.accessibilitySettings.furyHeartbeat": "Fury heartbeat volume",
+    "text.autoconfig.arcadia-particles.option.accessibilitySettings.furyHeartbeat.@Tooltip": "The volume level of the Fury heartbeat effect",
+    "text.autoconfig.arcadia-particles.option.accessibilitySettings.bygonesWhispers": "Bygones whispers volume",
+    "text.autoconfig.arcadia-particles.option.accessibilitySettings.bygonesWhispers.@Tooltip": "The volume level of the Bygones whispers effect",
+    "text.autoconfig.arcadia-particles.option.accessibilitySettings.toggleMonochrome": "Fury Monochrome",
+    "text.autoconfig.arcadia-particles.option.accessibilitySettings.toggleMonochrome.@Tooltip": "Toggle Fury monochrome effect",
+
+    "text.autoconfig.arcadia-particles.option.playerPacketSettings.toggleArtifice": "Artifice stars",
+    "text.autoconfig.arcadia-particles.option.playerPacketSettings.toggleArtifice.@Tooltip": "Toggle Artifice star visibility"
+}

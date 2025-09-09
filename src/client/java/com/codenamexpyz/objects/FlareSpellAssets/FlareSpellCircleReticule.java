@@ -2,10 +2,11 @@ package com.codenamexpyz.objects.FlareSpellAssets;
 
 import java.util.List;
 
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.Vec3d;
 
 public class FlareSpellCircleReticule {
-    List<FlareSpellCircle> flareCircles;
+    List<FlareSpellCircle<? extends ParticleEffect>> flareCircles;
     double sizeCoeff;
     double velocCoeff;
     double initRadius; //Initial radius
@@ -13,7 +14,7 @@ public class FlareSpellCircleReticule {
     private Vec3d raytraceResult = Vec3d.ZERO;
     private int count;
 
-    public FlareSpellCircleReticule(List<FlareSpellCircle> flareCircles, double sizeCoeff, double velocCoeff) {
+    public FlareSpellCircleReticule(List<FlareSpellCircle<? extends ParticleEffect>> flareCircles, double sizeCoeff, double velocCoeff) {
         this.flareCircles = flareCircles;
         this.sizeCoeff = sizeCoeff;
         this.velocCoeff = velocCoeff;
@@ -41,7 +42,7 @@ public class FlareSpellCircleReticule {
     public void spawnParticle(int count) {
         double nextRadius = initRadius;
         for (int i = 1; i < flareCircles.size() + 1; i++) {
-            FlareSpellCircle circle = flareCircles.get(i - 1);
+            FlareSpellCircle<? extends ParticleEffect> circle = flareCircles.get(i - 1);
 
             circle.radius = nextRadius;
 

@@ -14,7 +14,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Vec3d;
 
-import static com.codenamexpyz.ArcadiaParticlesClient.mc;
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
 
 public class sea {
     //Particle and color collections
@@ -32,7 +32,7 @@ public class sea {
         halo = new CircleParticleObject(loc.add(0, 2, 0), haloParticleList, colorList, 6, 0.5, 0.5, new Vec3d(0,-godEntity.getYaw(),0), new Vec3d(0, 1, 0), false);
         waterAura = new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0.1, 0), particleList, 5000000);
 
-        if (!mc.player.getName().equals(godEntity.getName())) {
+        if (config.godSettings.toggleSea) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     waterAura.tick();

@@ -1,5 +1,6 @@
 package com.codenamexpyz.gods;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class fury {
 
         cloak = new ParticleBurn<DustColorTransitionParticleEffect>(godEntity, new DustColorTransitionParticleEffect(new Color(1, 1, 1).getRGB(), new Color(192,192,192).getRGB(), 0.5f), 100);
 
-        if (!mc.player.getName().equals(godEntity.getName())) {
+        if (config.godSettings.toggleFury) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     double dist = new Vector2d(mc.player.getX(), mc.player.getZ()).distance(loc.x, loc.z);
@@ -39,40 +40,36 @@ public class fury {
                     double fadeVal = 180;
 
                     if (dist < maxDist && !close) { //First fade
-                        RenderManager.applyMonochromeShader(mc.getFramebuffer(), (float)(k/fadeVal));
                         k++;
                         if (k >= fadeVal) {
                             close = true;
                             k = fadeVal;
                         }
                     } else if (k > 0 && dist < maxDist) { //Finish fade if it's not done
-                        RenderManager.applyMonochromeShader(mc.getFramebuffer(), (float)(k/fadeVal));
                         k++;
                         if (k >= fadeVal) {
                             close = true;
                             k = fadeVal;
                         }
                     } else if (dist > maxDist && close) { //Last fade
-                        RenderManager.applyMonochromeShader(mc.getFramebuffer(), (float)(k/fadeVal));
                         k--;
                         if (k <= 0) {
                             close = false;
                             k = 0;
                         }
                     } else if (k < fadeVal && dist > maxDist) { //Finish more fade if it's not done
-                        RenderManager.applyMonochromeShader(mc.getFramebuffer(), (float)(k/fadeVal));
                         k--;
                         if (k <= 0) {
                             close = false;
                             k = 0;
                         }
-                    } else if (dist < maxDist && close) { //When close to the player
-                        RenderManager.applyMonochromeShader(mc.getFramebuffer(), 1.0f);
                     }
 
+                    if (config.accessibilitySettings.toggleMonochrome) RenderManager.applyMonochromeShader(mc.getFramebuffer(), (float)(k/fadeVal));
+
                     if (mc.player.getHealth() <= 2.0) { //Heartbeat effects
-                        SoundMaker.heatbeat((float)(k/fadeVal), i, 400);
-                    } else SoundMaker.heatbeat((float)(k/fadeVal), i, 200);
+                        SoundMaker.heatbeat((float)((k/fadeVal) * ((double)config.accessibilitySettings.furyHeartbeat/100)), i, 400);
+                    } else SoundMaker.heatbeat((float)((k/fadeVal) * ((double)config.accessibilitySettings.furyHeartbeat/100)), i, 200);
                     
                     cloak.tick();
                     

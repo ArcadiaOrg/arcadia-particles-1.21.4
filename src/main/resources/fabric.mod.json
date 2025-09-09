@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "arcadia-particles",
-	"version": "${version}",
+	"version": "0.1.6",
 	"name": "Arcadia Particles",
 	"description": "Particles that show the divinity of the Gods",
 	"authors": [
@@ -20,6 +20,9 @@
 		],
 		"client": [
 			"com.codenamexpyz.ArcadiaParticlesClient"
+		],
+		"modmenu" : [
+			"com.codenamexpyz.config.ModmenuIntegration"
 		]
 	},
 	"mixins": [

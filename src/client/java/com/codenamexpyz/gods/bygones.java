@@ -23,6 +23,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 import static com.codenamexpyz.ArcadiaParticles.whispersEvent;
 
@@ -48,7 +49,7 @@ public class bygones {
         glassAura = new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0, 0), particleList, 3000000);
         glassTrail = new ParticleTrail(loc, -godEntity.getYaw(), particleList, true, 20);
 
-        if (!mc.player.getName().equals(godEntity.getName())) {
+        if (config.godSettings.toggleBygones) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     double dist = new Vector2d(mc.player.getX(), mc.player.getZ()).distance(loc.x, loc.z);
@@ -65,34 +66,32 @@ public class bygones {
                     }
 
                     if (dist < maxDist && !faded) { //First fade
-                        whisper.setVolume((modifier*k)/fadeVal);
                         k++;
                         if (k >= fadeVal) {
                             faded = true;
                             k = fadeVal;
                         }
                     } else if (k > 0 && dist < maxDist) { //Finish fade if it's not done
-                        whisper.setVolume((modifier*k)/fadeVal);
                         k++;
                         if (k >= fadeVal) {
                             faded = true;
                             k = fadeVal;
                         }
                     } else if (dist > maxDist && faded) { //Last fade
-                        whisper.setVolume((modifier*k)/fadeVal);
                         k--;
                         if (k <= 0) {
                             faded = false;
                             k = 0;
                         }
                     } else if (k < fadeVal && dist > maxDist) { //Finish more fade if it's not done
-                        whisper.setVolume((modifier*k)/fadeVal);
                         k--;
                         if (k <= 0) {
                             faded = false;
                             k = 0;
                         }
                     }
+
+                    whisper.setVolume(((modifier*k)/fadeVal) * ((double)config.accessibilitySettings.bygonesWhispers/100));
                     
                     visorHandle(godEntity);
                     halo.tick(loc.add(0, 2, 0));

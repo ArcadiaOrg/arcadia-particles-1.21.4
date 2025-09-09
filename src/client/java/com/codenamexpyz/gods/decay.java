@@ -10,7 +10,7 @@ import net.minecraft.util.math.Vec3d;
 
 import com.codenamexpyz.objects.ParticleAura;
 
-import static com.codenamexpyz.ArcadiaParticlesClient.mc;
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
 
 public class decay {
     //Particle collection
@@ -22,7 +22,7 @@ public class decay {
     public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
         decayingAura = new ParticleAura(godEntity.getPos(), new Vec3d(3, 3, 3), new Vec3d(0, (godEntity.isOnGround()) ? 0.05 : 0.035, 0), particleList, 250000); //decaying aura based on ground or not
 
-        if (!mc.player.getName().equals(godEntity.getName())) {
+        if (config.godSettings.toggleDecay) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     decayingAura.tick();

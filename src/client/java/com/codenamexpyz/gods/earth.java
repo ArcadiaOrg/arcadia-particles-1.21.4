@@ -14,6 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import com.codenamexpyz.objects.ParticleAura;
 import com.codenamexpyz.utils.Rotator;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 public class earth {
@@ -31,7 +32,7 @@ public class earth {
 
         earthAura = new ParticleAura(loc, new Vec3d(3, 4, 3), new Vec3d(0, 0.21, 0), particleList, uniqueColorAura(loc, godEntity), 1000000);
 
-        if (!mc.player.getName().equals(godEntity.getName())) {
+        if (config.godSettings.toggleEarth) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     earthAura.tick();

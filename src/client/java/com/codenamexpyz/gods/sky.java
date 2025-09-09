@@ -16,6 +16,7 @@ import com.codenamexpyz.objects.ParticleTrail;
 import com.codenamexpyz.objects.ParticleSplash.ParticleSplash;
 import com.codenamexpyz.objects.ParticleSplash.SplashManager;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 public class sky {
@@ -34,7 +35,7 @@ public class sky {
 
         halo = new CircleParticleObject(loc.add(0, 2, 0), particleList, colorList, 26, 0.5, 0.5, new Vec3d(0, -godEntity.getHeadYaw(), 0), false);
 
-        if (!mc.player.getName().equals(godEntity.getName())) {
+        if (config.godSettings.toggleSky) {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     halo.tick(loc);
