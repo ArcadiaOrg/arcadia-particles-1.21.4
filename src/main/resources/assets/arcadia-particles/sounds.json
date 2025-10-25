@@ -3,5 +3,10 @@
     "sounds": [
       "arcadia-particles:whispering"
     ]
+  },
+  "double_jump": {
+    "sounds": [
+      "arcadia-particles:double_jump"
+    ]
   }
 }

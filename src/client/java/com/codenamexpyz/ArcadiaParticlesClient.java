@@ -8,6 +8,7 @@ import com.codenamexpyz.networking.packetManager;
 import com.codenamexpyz.objects.ParticleSplash.SplashManager;
 import com.codenamexpyz.utils.Keybinds;
 import com.codenamexpyz.utils.ParticleManager;
+import com.codenamexpyz.utils.SpellManager;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
@@ -33,9 +34,10 @@ public class ArcadiaParticlesClient implements ClientModInitializer {
 		new packetManager();
 		Keybinds.register();
 		
-		WorldRenderEvents.END.register(context -> {	
-			if (mc.world != null && !mc.isPaused()) { 
+		WorldRenderEvents.LAST.register(context -> {	
+			if (mc.world != null && !mc.isPaused()) { //Particle case
 				ParticleManager.handleParticles(); //particles
+				SpellManager.tick();
 			}
 		});
 	}

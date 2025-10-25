@@ -1,11 +1,12 @@
 {
 	"schemaVersion": 1,
 	"id": "arcadia-particles",
-	"version": "0.1.6",
+	"version": "0.1.8",
 	"name": "Arcadia Particles",
 	"description": "Particles that show the divinity of the Gods",
 	"authors": [
-		"Xpyz"
+		"Xpyz",
+		"Dij0n"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",

@@ -11,11 +11,10 @@ public class Keybinds {
     public static KeyBinding sendPacketTrue;
     public static KeyBinding sendPacketFalse;
 
-
     public static void registerKeyInputs() {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if(sendPacketTrue.wasPressed()) {
-                //packetManager.hasMod(true);
+                
             }
             if(sendPacketFalse.wasPressed()) {
                 //packetManager.hasMod(false);

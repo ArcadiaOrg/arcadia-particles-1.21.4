@@ -29,7 +29,6 @@ public class FlareSpellCircleReticule {
 
     public boolean tick() {
         if (count >= 100) {
-            FlareSpellManager.reticulesAdded = false;
             return true;
         };
 

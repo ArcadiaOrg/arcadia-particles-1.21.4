@@ -16,8 +16,12 @@ public class ArcadiaParticles implements ModInitializer {
 	private static final Identifier whispersID = Identifier.of(MOD_ID, "decay_whispers");
 	public static SoundEvent whispersEvent = SoundEvent.of(whispersID);
 
+	private static final Identifier divID = Identifier.of(MOD_ID, "double_jump");
+	public static SoundEvent divEvent = SoundEvent.of(divID);
+
 	@Override
 	public void onInitialize() {
 		Registry.register(Registries.SOUND_EVENT, whispersID, whispersEvent);
+		Registry.register(Registries.SOUND_EVENT, divID, divEvent);
 	}
 }

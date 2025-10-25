@@ -51,8 +51,8 @@ public class ParticleManager {
                 fury.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            if (player.getName().getLiteralString().equals("xpyz")) { //for testing mc.player.getName().getString()
-                if (StarManager.getNumOfStars() < 0 && config.playerPacketSettings.toggleArtifice) {
+            if (player.getName().getLiteralString().equals("xpyz") && config.playerPacketSettings.toggleArtifice) { //for testing mc.player.getName().getString()
+                if (StarManager.getNumOfStars() < 3) {
                     StarManager.addStar(
                         new StarParticle<ParticleEffect>(
                             new Vec3d(0, 0, 0), 

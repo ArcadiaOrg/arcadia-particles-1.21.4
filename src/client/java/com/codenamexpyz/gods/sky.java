@@ -36,9 +36,9 @@ public class sky {
         halo = new CircleParticleObject(loc.add(0, 2, 0), particleList, colorList, 26, 0.5, 0.5, new Vec3d(0, -godEntity.getHeadYaw(), 0), false);
 
         if (config.godSettings.toggleSky) {
-            for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
+            for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    halo.tick(loc);
+                    halo.tick(loc.add(0, 2, 0));
                     ParticleTrail.UniqueParticleTrail(loc, player, ParticleTypes.CLOUD, null, 20, 0.4f, 1.5f);
 
                     if (godEntity.isOnGround() && (timeOffGround >= 13 + ((mc.getCurrentFps() >= 60) ? 60 : mc.getCurrentFps()))) {  //ITS PER FRAMERATE NOW IT NEEDS TO WORK PLEASEEEE
