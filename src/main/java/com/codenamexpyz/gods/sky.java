@@ -12,9 +12,9 @@ import net.minecraft.particle.SimpleParticleType;
 import net.minecraft.util.math.Vec3d;
 
 import com.codenamexpyz.objects.CircleParticleObject;
-import com.codenamexpyz.objects.ParticleTrail;
-import com.codenamexpyz.objects.ParticleSplash.ParticleSplash;
-import com.codenamexpyz.objects.ParticleSplash.SplashManager;
+import com.codenamexpyz.objects.ParticleSplash;
+import com.codenamexpyz.objects.StaticParticles;
+import com.codenamexpyz.utils.Managers.PlayerEffectManager;
 
 import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
@@ -39,10 +39,10 @@ public class sky {
             for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     halo.tick(loc.add(0, 2, 0));
-                    ParticleTrail.UniqueParticleTrail(loc, player, ParticleTypes.CLOUD, null, 20, 0.4f, 1.5f);
+                    StaticParticles.UniqueParticleTrail(loc, player, ParticleTypes.CLOUD, null, 20, 0.4f, 1.5f);
 
                     if (godEntity.isOnGround() && (timeOffGround >= 13 + ((mc.getCurrentFps() >= 60) ? 60 : mc.getCurrentFps()))) {  //ITS PER FRAMERATE NOW IT NEEDS TO WORK PLEASEEEE
-                        SplashManager.addSplash(new ParticleSplash<SimpleParticleType>(loc.add(0, 0.7, 0), ParticleTypes.CLOUD, 4, 0.1, 0, 0.75f, new Vec3d(0, 0, 0)));
+                        PlayerEffectManager.addSplash(new ParticleSplash<SimpleParticleType>(loc.add(0, 0.7, 0), ParticleTypes.CLOUD, 4, 0.1, 0, 0.75f, new Vec3d(0, 0, 0)));
                     }
 
                     timeOffGround = (godEntity.isOnGround()) ? 0 : timeOffGround + 1; //This is a crazy check that makes it only run once, and only if it's a sizable fall

@@ -1,10 +1,8 @@
 package com.codenamexpyz.objects;
 
-import org.jetbrains.annotations.Nullable;
 import org.joml.Vector3d;
 
 import net.minecraft.client.particle.Particle;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.Vec3d;
 
@@ -58,30 +56,6 @@ public class ParticleTrail {
         this.withRandom = withRandom;
         this.duration = duration;
         this.scale = scale;
-    }
-
-    public static <T extends ParticleEffect>void UniqueParticleTrail(Vec3d pos, PlayerEntity player, T particleType, @Nullable Vec3d color, int duration, float groundScale, float flyingScale) { //Unique case
-        double yRot = -player.getBodyYaw();
-
-        for (double i = -0.2; i <= 0.2; i += 0.1) {
-            Rotator rotator = new Rotator();
-
-            rotator.rotateYQuaternion((float)(Math.toRadians(yRot)));
-
-            Vector3d newRot = rotator.rotateVectorQuaternion(new Vector3d(i, 0, 0));
-
-            Particle particle = mc.particleManager.addParticle(particleType, pos.getX() + newRot.x, pos.getY() + newRot.y, pos.getZ() + newRot.z, 0, 0, 0);
-
-            if (player.isOnGround()) { //Relative scaling
-                particle.scale(groundScale);
-            } else {
-                particle.scale(flyingScale);
-            }
-
-            particle.setMaxAge(duration);
-            particle.setVelocity(0,0,0);
-            if (color != null) particle.setColor((float)color.x, (float)color.y, (float)color.z);
-        }
     }
 
     public void tick() {

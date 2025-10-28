@@ -1,4 +1,4 @@
-package com.codenamexpyz.utils;
+package com.codenamexpyz.utils.Managers;
 
 import static com.codenamexpyz.ArcadiaParticlesClient.MOD_ID;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;

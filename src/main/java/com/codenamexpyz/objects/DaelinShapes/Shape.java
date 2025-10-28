@@ -84,4 +84,15 @@ public abstract class Shape {
         count += 1;
         return isDead();
     }
+
+    protected static double[][] flipMatrix(double[][] matrix) {
+        double[][] flipped = new double[4][2];
+
+        flipped[0][0] = -matrix[0][0]; flipped[0][1] = -matrix[0][1]; //Top Right
+        flipped[1][0] = -matrix[1][0]; flipped[1][1] = -matrix[1][1]; //Top Left
+        flipped[2][0] = -matrix[2][0]; flipped[2][1] = -matrix[2][1]; //Back Left
+        flipped[3][0] = -matrix[3][0]; flipped[3][1] = -matrix[3][1]; //Back Right
+
+        return flipped;
+    }
 }

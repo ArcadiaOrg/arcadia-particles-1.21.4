@@ -1,7 +1,10 @@
 package com.codenamexpyz.networking;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.config;
+
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 import org.joml.Vector3f;
 
@@ -9,11 +12,14 @@ import com.codenamexpyz.networking.SpellPayloads.generalSpellPayloadS2C;
 import com.codenamexpyz.networking.SpellPayloads.spellTickPayloadS2C;
 import com.codenamexpyz.networking.hasModPayloads.hasModPayloadC2S;
 import com.codenamexpyz.networking.hasModPayloads.hasModPayloadS2C;
+import com.codenamexpyz.objects.StaticParticles;
+import com.codenamexpyz.objects.DaelinShapes.Pentagon;
+import com.codenamexpyz.objects.DaelinShapes.Square;
 import com.codenamexpyz.objects.DaelinShapes.Triangle;
 import com.codenamexpyz.objects.FlareSpellAssets.FlareSpellCircle;
 import com.codenamexpyz.objects.FlareSpellAssets.FlareSpellCircleReticule;
 import com.codenamexpyz.objects.SoundObjects.SoundMaker;
-import com.codenamexpyz.utils.SpellManager;
+import com.codenamexpyz.utils.Managers.SpellManager;
 
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
@@ -53,8 +59,21 @@ public class packetManager {
                     );
                     break;
                 case "DoubleJump":
-                    SpellManager.addShape(new Triangle(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
-                    SoundMaker.divJump(1.0f, payload.playerPos());
+                    if (!config.playerPacketSettings.toggleDoubleRender) break;
+                    Random random = new Random();
+                    switch (random.nextInt(3)) { //So many switches
+                        case 0:
+                            SpellManager.addShape(new Square(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
+                            break;
+                        case 1:
+                            SpellManager.addShape(new Triangle(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
+                            break;
+                        default:
+                            SpellManager.addShape(new Pentagon(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
+                            break;
+                    }
+                    StaticParticles.ParticleJet(new Vec3d(new Vector3f(payload.playerPos())), List.of(ParticleTypes.CLOUD), null, 50, 20);
+                    SoundMaker.divJump(((float)config.accessibilitySettings.doubleJumpSound/100f), payload.playerPos());
                     break;
             
                 default:

@@ -7,7 +7,7 @@ import java.awt.Color;
 
 import com.codenamexpyz.objects.CircleParticleObject;
 import com.codenamexpyz.objects.ParticleAura;
-import com.codenamexpyz.objects.ParticleTrail;
+import com.codenamexpyz.objects.StaticParticles;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleEffect;
@@ -37,7 +37,7 @@ public class sea {
                 if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
                     waterAura.tick();
                     halo.tick(loc);
-                    ParticleTrail.UniqueParticleTrail(loc, player, ParticleTypes.END_ROD, null, 30, 1f, 0);
+                    StaticParticles.UniqueParticleTrail(loc, player, ParticleTypes.END_ROD, null, 30, 1f, 0);
                 }
             }
         }

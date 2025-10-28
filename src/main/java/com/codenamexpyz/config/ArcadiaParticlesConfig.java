@@ -52,6 +52,10 @@ public class ArcadiaParticlesConfig extends PartitioningSerializer.GlobalData {
         public int bygonesWhispers = 100;
 
         @ConfigEntry.Gui.Tooltip(count = 1)
+        @ConfigEntry.BoundedDiscrete(max = 100)
+        public int doubleJumpSound = 100;
+
+        @ConfigEntry.Gui.Tooltip(count = 1)
         public boolean toggleMonochrome = true;
     }
 
@@ -59,5 +63,8 @@ public class ArcadiaParticlesConfig extends PartitioningSerializer.GlobalData {
     public static class PlayerPacketSettings implements ConfigData { 
         @ConfigEntry.Gui.Tooltip(count = 1)
         public boolean toggleArtifice = true;
+
+        @ConfigEntry.Gui.Tooltip(count = 1)
+        public boolean toggleDoubleRender = true;
     }
 }

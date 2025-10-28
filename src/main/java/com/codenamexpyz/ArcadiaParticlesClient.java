@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 
 import com.codenamexpyz.config.ArcadiaParticlesConfig;
 import com.codenamexpyz.networking.packetManager;
-import com.codenamexpyz.objects.ParticleSplash.SplashManager;
 import com.codenamexpyz.utils.Keybinds;
-import com.codenamexpyz.utils.ParticleManager;
-import com.codenamexpyz.utils.SpellManager;
+import com.codenamexpyz.utils.Managers.PlayerEffectManager;
+import com.codenamexpyz.utils.Managers.SpellManager;
 
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
@@ -26,7 +25,6 @@ public class ArcadiaParticlesClient implements ClientModInitializer {
 	@Override
 	public void onInitializeClient() {
 		mc = MinecraftClient.getInstance();
-		SplashManager.init(); //Splash handling
 
 		AutoConfig.register(ArcadiaParticlesConfig.class, PartitioningSerializer.wrap(JanksonConfigSerializer::new));
         config = AutoConfig.getConfigHolder(ArcadiaParticlesConfig.class).getConfig();
@@ -36,7 +34,7 @@ public class ArcadiaParticlesClient implements ClientModInitializer {
 		
 		WorldRenderEvents.LAST.register(context -> {	
 			if (mc.world != null && !mc.isPaused()) { //Particle case
-				ParticleManager.handleParticles(); //particles
+				PlayerEffectManager.handleParticles(); //particles
 				SpellManager.tick();
 			}
 		});

@@ -1,15 +1,18 @@
-package com.codenamexpyz.utils;
+package com.codenamexpyz.utils.Managers;
 
 import static com.codenamexpyz.ArcadiaParticlesClient.config;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import com.codenamexpyz.gods.bygones;
 import com.codenamexpyz.gods.sky;
 import com.codenamexpyz.objects.CircleParticleObject;
+import com.codenamexpyz.objects.ParticleSplash;
 import com.codenamexpyz.objects.StarParticles.StarManager;
 import com.codenamexpyz.objects.StarParticles.StarParticle;
+import com.codenamexpyz.utils.PlayerUtils;
 import com.codenamexpyz.gods.earth;
 import com.codenamexpyz.gods.fury;
 import com.codenamexpyz.gods.sea;
@@ -22,8 +25,16 @@ import net.minecraft.util.math.Vec3d;
 
 //import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
-public class ParticleManager {
+public class PlayerEffectManager {
+    private static final List<ParticleSplash<? extends ParticleEffect>> Splash = new ArrayList<>();
+
+    public static void addSplash(ParticleSplash<? extends ParticleEffect> splash) {
+        Splash.add(splash);
+    }
+    
     public static void handleParticles() {
+        Splash.removeIf(ParticleSplash::tick);
+
         List<PlayerEntity> nearbyPlayerEntities = PlayerUtils.getNearbyPlayers();
         
         for (PlayerEntity player : nearbyPlayerEntities) { //Check for if the god is nearby. If not, it doesn't call the particles.
@@ -66,7 +77,7 @@ public class ParticleManager {
                     player);
                 } 
 
-                StarManager.tick(player);
+                StarManager.tick(player); //Very unique tick, has to stay. Sadly.
             }
         }
     }

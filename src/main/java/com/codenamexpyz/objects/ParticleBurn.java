@@ -17,7 +17,6 @@ public class ParticleBurn <T extends ParticleEffect> {
     private final T particleType;
     private final int randVal;
 
-
     public ParticleBurn(PlayerEntity player, T particleType, int randVal) {
         this.player = player;
         this.particleType = particleType;

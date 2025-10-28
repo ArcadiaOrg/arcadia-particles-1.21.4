@@ -11,7 +11,7 @@ import java.awt.Color;
 
 import com.codenamexpyz.objects.ParticleBurn;
 import com.codenamexpyz.objects.SoundObjects.SoundMaker;
-import com.codenamexpyz.utils.RenderManager;
+import com.codenamexpyz.utils.Managers.RenderManager;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.DustColorTransitionParticleEffect;

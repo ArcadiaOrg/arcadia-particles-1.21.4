@@ -1,4 +1,4 @@
-package com.codenamexpyz.objects.ParticleSplash;
+package com.codenamexpyz.objects;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.particle.ParticleEffect;
