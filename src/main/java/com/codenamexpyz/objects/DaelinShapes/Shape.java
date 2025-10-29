@@ -71,7 +71,8 @@ public abstract class Shape {
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(ShaderProgramKeys.POSITION_COLOR);
-        RenderSystem.depthFunc(GL11.GL_ALWAYS);
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthFunc(GL11.GL_LEQUAL);
         RenderSystem.depthMask(true);
 
         for (BuiltBuffer buffer : compiledShape) {
