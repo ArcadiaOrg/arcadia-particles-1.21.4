@@ -1,5 +1,6 @@
 package com.codenamexpyz.networking;
 
+import static com.codenamexpyz.ArcadiaParticlesClient.LOGGER;
 import static com.codenamexpyz.ArcadiaParticlesClient.config;
 
 import java.awt.Color;
@@ -35,12 +36,15 @@ public class packetManager {
         /* -------- Server 2 Client channel registration --------- */
         PayloadTypeRegistry.playS2C().register(hasModPayloadS2C.id, hasModPayloadS2C.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(hasModPayloadS2C.id, (payload, context) -> { //FUNNIEST CODE EVER. WHO NEEDS THE PAYLOAD.
+            LOGGER.info("Recieved mod check!");
             ClientPlayNetworking.send(new hasModPayloadC2S(false)); //Sends a packet, confirming the player has the mod. Wish it could be empty, but alas.
         });
 
         PayloadTypeRegistry.playS2C().register(generalSpellPayloadS2C.id, generalSpellPayloadS2C.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(generalSpellPayloadS2C.id, (payload, context) -> {
-            switch (payload.spellName()) {
+            String spellName = new String(payload.spellName());
+            LOGGER.info(spellName);
+            switch (spellName) {
                 case "Flare":
                     SpellManager.addreticule(
                         new FlareSpellCircleReticule(

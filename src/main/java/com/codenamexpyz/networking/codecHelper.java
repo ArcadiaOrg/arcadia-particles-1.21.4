@@ -21,6 +21,24 @@ public interface codecHelper extends CustomPayload {
       )
    );
 
+   public PacketCodec<ByteBuf, char[]> CHARS = PacketCodec.of(
+      (chars, buf) -> { //Encodes the list of characters 
+         for (char c : chars) {
+            buf.writeChar(c);
+         }
+      },
+      buf -> { //Takes a preceding length int, and converts the following character list into readable characters
+         int length = buf.readInt();
+         char[] chars = new char[length]; 
+
+         for (int i = 0; i < length; i++){
+            chars[i] = buf.readChar();
+         }
+
+         return chars;
+      }
+   );
+
    @SuppressWarnings({ "rawtypes", "unchecked" })
    static <T extends CustomPayload> Id<T> id(String namespace, String path) {
       return new Id(Identifier.of(namespace, path));
