@@ -13,6 +13,15 @@ base {
 repositories {
 	maven { url "https://maven.shedaniel.me/" }
 	maven { url "https://maven.terraformersmc.com/releases/" }	
+	maven {
+        name = 'Ladysnake Mods'
+        url = 'https://maven.ladysnake.org/releases'
+        content {
+            includeGroup 'io.github.ladysnake'
+            includeGroup 'org.ladysnake'
+            includeGroupByRegex 'dev\\.onyxstudios.*'
+        }
+    }
 }
 
 dependencies {
@@ -24,6 +33,9 @@ dependencies {
 
 	modApi "me.shedaniel.cloth:cloth-config-fabric:${project.cloth_version}"
 	modApi "com.terraformersmc:modmenu:${project.modmenu_version}"
+	
+	modImplementation "org.ladysnake:satin:${satin_version}"
+	include "org.ladysnake:satin:${satin_version}"
 }
 
 processResources {

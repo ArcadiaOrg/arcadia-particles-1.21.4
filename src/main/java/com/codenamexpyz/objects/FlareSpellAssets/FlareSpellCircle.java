@@ -12,18 +12,18 @@ import net.minecraft.util.math.Vec3d;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 public class FlareSpellCircle <T extends ParticleEffect> {
-    Vec3d velocity;
-    double radius;
+    private Vec3d velocity;
+    protected double radius;
 
-    Vec3d rotation;
-    public Vec3d offset;
+    private Vec3d rotation;
+    protected Vec3d offset;
 
-    double totalParticles;
+    private double totalParticles;
 
     private Vec3d color;
     private T particle;
 
-    public Vec3d baseOffset;
+    protected Vec3d baseOffset;
 
     public FlareSpellCircle(@Nullable Vec3d offset, T particle, Vec3d color, double totalParticles, double radius, Vec3d velocity, Vec3d rotation) {
         this.offset = offset != null ? offset : Vec3d.ZERO;

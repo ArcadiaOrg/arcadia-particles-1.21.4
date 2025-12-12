@@ -13,6 +13,7 @@ import com.codenamexpyz.objects.ParticleSplash;
 import com.codenamexpyz.objects.StarParticles.StarManager;
 import com.codenamexpyz.objects.StarParticles.StarParticle;
 import com.codenamexpyz.utils.PlayerUtils;
+import com.codenamexpyz.utils.Rendering.MonochromeShader;
 import com.codenamexpyz.gods.earth;
 import com.codenamexpyz.gods.fury;
 import com.codenamexpyz.gods.sea;
@@ -27,39 +28,49 @@ import net.minecraft.util.math.Vec3d;
 
 public class PlayerEffectManager {
     private static final List<ParticleSplash<? extends ParticleEffect>> Splash = new ArrayList<>();
+    private static final bygones bygonesEffect = new bygones();
+    private static final decay decayEffect = new decay();
+    private static final earth earthEffect = new earth();
+    private static final fury furyEffect = new fury();
+    private static final sea seaEffect = new sea();
+    private static final sky skyEffect = new sky();
 
     public static void addSplash(ParticleSplash<? extends ParticleEffect> splash) {
         Splash.add(splash);
     }
+
+    public static void handleSpecialEffect() {
+        Splash.removeIf(ParticleSplash::tick);
+    }
     
     public static void handleParticles() {
-        Splash.removeIf(ParticleSplash::tick);
-
         List<PlayerEntity> nearbyPlayerEntities = PlayerUtils.getNearbyPlayers();
         
         for (PlayerEntity player : nearbyPlayerEntities) { //Check for if the god is nearby. If not, it doesn't call the particles.
-            if (player.getName().getLiteralString().equals("Rasheairy")) {
-                bygones.triggerParticles(nearbyPlayerEntities, player);
+            if (player.getName().getLiteralString().equals("Rasheairy") && config.godSettings.toggleBygones) {
+                bygonesEffect.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            if (player.getName().getLiteralString().equals("IDKnows")) {
-                sky.triggerParticles(nearbyPlayerEntities, player);
+            if (player.getName().getLiteralString().equals("IDKnows") && config.godSettings.toggleSky) {
+                skyEffect.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            if (player.getName().getLiteralString().equals("ZombieDwarf")) {
-                earth.triggerParticles(nearbyPlayerEntities, player);
+            if (player.getName().getLiteralString().equals("ZombieDwarf") && config.godSettings.toggleEarth) {
+                earthEffect.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            if (player.getName().getLiteralString().equals("ssiba1_")) {
-                decay.triggerParticles(nearbyPlayerEntities, player);
+            if (player.getName().getLiteralString().equals("ssiba1_") && config.godSettings.toggleDecay) {
+                decayEffect.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            if (player.getName().getLiteralString().equals("zeteri_art")) {
-                sea.triggerParticles(nearbyPlayerEntities, player);
+            if (player.getName().getLiteralString().equals("zeteri_art") && config.godSettings.toggleSea) {
+                seaEffect.triggerParticles(nearbyPlayerEntities, player);
             }
 
-            if (player.getName().getLiteralString().equals("WadeBox")) {
-                fury.triggerParticles(nearbyPlayerEntities, player);
+            if (player.getName().getLiteralString().equals("WadeBox") && config.godSettings.toggleFury) {
+                furyEffect.triggerParticles(nearbyPlayerEntities, player);
+            } else {
+                MonochromeShader.setOpacity(0);
             }
 
             if (player.getName().getLiteralString().equals("xpyz") && config.playerPacketSettings.toggleArtifice) { //for testing mc.player.getName().getString()

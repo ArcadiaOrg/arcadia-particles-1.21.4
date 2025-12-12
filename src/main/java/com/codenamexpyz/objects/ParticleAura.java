@@ -13,11 +13,11 @@ import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
 public class ParticleAura {
     private final static int maxAge = 5;
-    private final Vec3d loc;
+    private Vec3d loc;
     private final Vec3d radius;
-    private final Vec3d veloc;
+    private Vec3d veloc;
     private final List<? extends ParticleEffect> particleList;
-    private final List<Vec3d> colorList;
+    private List<Vec3d> colorList;
     private final int randVal;
 
     public ParticleAura(Vec3d loc, Vec3d radius, Vec3d veloc, List<? extends ParticleEffect> particleList, int randVal) {
@@ -38,7 +38,19 @@ public class ParticleAura {
         this.randVal = randVal;
     }
 
-    public void tick() {
+    public ParticleAura setVelocity(Vec3d veloc) {
+        this.veloc = veloc;
+        return this;
+    }
+
+    public ParticleAura setColors(List<Vec3d> colorList) {
+        this.colorList = colorList;
+        return this;
+    }
+
+    public void tick(Vec3d loc) {
+        this.loc = loc;
+
         for (double i = -radius.x; i <= radius.x; i += 0.1) {
             for (double j = -radius.y; j <= radius.y; j += 0.1) {
                 for (double k = -radius.z; k <= radius.z; k += 0.1) {
@@ -47,7 +59,7 @@ public class ParticleAura {
                     int randPar = rand.nextInt(particleList.size());
         
                     if (randNum == (randVal-1)) {
-                        Particle particle = mc.particleManager.addParticle(particleList.get(randPar), loc.x + k, loc.y + j + 1, loc.z + i, 0, 0, 0);
+                        Particle particle = mc.particleManager.addParticle(particleList.get(randPar), this.loc.x + k, this.loc.y + j + 1, this.loc.z + i, 0, 0, 0);
                         if (colorList != null) particle.setColor((float)colorList.get(randPar).getX(), (float)colorList.get(randPar).getY(), (float)colorList.get(randPar).getZ());
                         particle.setMaxAge(maxAge);
                         particle.setVelocity(veloc.getX(),veloc.getY(),veloc.getZ());

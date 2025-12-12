@@ -27,89 +27,29 @@ import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 import static com.codenamexpyz.ArcadiaParticles.whispersEvent;
 
-public class bygones {
+public class bygones extends GodBase {
     //Particle collections and thread-based randomizer
-    private static ThreadLocalRandom rand = ThreadLocalRandom.current();
-    private static final List<BlockStateParticleEffect> particleList = Arrays.asList(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GRAY_STAINED_GLASS.getDefaultState()), new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState()));
+    private ThreadLocalRandom rand = ThreadLocalRandom.current();
+    private final List<BlockStateParticleEffect> particleList = Arrays.asList(new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.GRAY_STAINED_GLASS.getDefaultState()), new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.LIGHT_GRAY_STAINED_GLASS.getDefaultState()));
     
     //For the fading and sound logic
-    private static SoundTickable whisper = new SoundTickable(mc.player, whispersEvent, SoundCategory.MASTER);
-    private static boolean faded = false;
-    private static double k = 0; 
+    private SoundTickable whisper = new SoundTickable(mc.player, whispersEvent, SoundCategory.MASTER);
+    private boolean faded = false;
+    private double k = 0; 
 
     //Objects used. Only needs to be declaired once for ticking sake.
-    private static CircleParticleObject halo;
-    private static ParticleAura glassAura;
-    private static ParticleTrail glassTrail;
+    private CircleParticleObject halo = new CircleParticleObject(loc.add(0, 2, 0), particleList, null, 60, 0.2, 0.5, new Vec3d(-20, godYaw(), 0), true);
+    private ParticleAura glassAura = new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0, 0), particleList, 3000000);
+    private ParticleTrail glassTrail = new ParticleTrail(loc, godYaw(), particleList, true, 20);
 
-    public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
-        Vec3d loc = godEntity.getPos();
-
-        halo = new CircleParticleObject(loc.add(0, 2, 0), particleList, null, 60, 0.2, 0.5, new Vec3d(-20, -godEntity.getHeadYaw(), 0), true);
-        glassAura = new ParticleAura(loc, new Vec3d(3, 3, 3), new Vec3d(0, 0, 0), particleList, 3000000);
-        glassTrail = new ParticleTrail(loc, -godEntity.getYaw(), particleList, true, 20);
-
-        if (config.godSettings.toggleBygones) {
-            for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
-                if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    double dist = new Vector2d(mc.player.getX(), mc.player.getZ()).distance(loc.x, loc.z);
-                    double maxDist = 40;
-                    double fadeVal = 180;
-                    double modifier = 0.15;
-
-                    if (dist < maxDist && !mc.getSoundManager().isPlaying(whisper)) {
-                        mc.getSoundManager().play(whisper);
-                    }
-
-                    if (mc.getSoundManager().isPlaying(whisper) && whisper.getVolume() <= 0) {
-                        mc.getSoundManager().stop(whisper);
-                    }
-
-                    if (dist < maxDist && !faded) { //First fade
-                        k++;
-                        if (k >= fadeVal) {
-                            faded = true;
-                            k = fadeVal;
-                        }
-                    } else if (k > 0 && dist < maxDist) { //Finish fade if it's not done
-                        k++;
-                        if (k >= fadeVal) {
-                            faded = true;
-                            k = fadeVal;
-                        }
-                    } else if (dist > maxDist && faded) { //Last fade
-                        k--;
-                        if (k <= 0) {
-                            faded = false;
-                            k = 0;
-                        }
-                    } else if (k < fadeVal && dist > maxDist) { //Finish more fade if it's not done
-                        k--;
-                        if (k <= 0) {
-                            faded = false;
-                            k = 0;
-                        }
-                    }
-
-                    whisper.setVolume(((modifier*k)/fadeVal) * ((double)config.accessibilitySettings.bygonesWhispers/100));
-                    
-                    visorHandle(godEntity);
-                    halo.tick(loc.add(0, 2, 0));
-                    glassAura.tick();
-                    if (godEntity.isOnGround() && rand.nextInt(5) == 0) glassTrail.tick(); //Ground trail handle
-                }
-            }
-        }
-    }
-
-    private static void visorHandle(PlayerEntity player) { //Unique
+    private void visorHandle(PlayerEntity player) { //Unique
         Vec3d loc = player.getEyePos();
 
         double pitch = player.getPitch();
         double yRot= -player.getYaw();
         double zRot = 0;
         double coefficient = 0.05;
-        int randVal = 2500;
+        int randVal = 1250;
         double xOffset = 0;
         double yOffset = 0;
 
@@ -142,5 +82,54 @@ public class bygones {
                 }
             }
         }
+    }
+
+    @Override
+    protected void godEffect(PlayerEntity player) {
+        double dist = new Vector2d(mc.player.getX(), mc.player.getZ()).distance(loc.x, loc.z);
+        double maxDist = 40;
+        double fadeVal = 180;
+        double modifier = 0.15;
+
+        if (dist < maxDist && !mc.getSoundManager().isPlaying(whisper)) {
+            mc.getSoundManager().play(whisper);
+        }
+
+        if (mc.getSoundManager().isPlaying(whisper) && whisper.getVolume() <= 0) {
+            mc.getSoundManager().stop(whisper);
+        }
+
+        if (dist < maxDist && !faded) { //First fade
+            k++;
+            if (k >= fadeVal) {
+                faded = true;
+                k = fadeVal;
+            }
+        } else if (k > 0 && dist < maxDist) { //Finish fade if it's not done
+            k++;
+            if (k >= fadeVal) {
+                faded = true;
+                k = fadeVal;
+            }
+        } else if (dist > maxDist && faded) { //Last fade
+            k--;
+            if (k <= 0) {
+                faded = false;
+                k = 0;
+            }
+        } else if (k < fadeVal && dist > maxDist) { //Finish more fade if it's not done
+            k--;
+            if (k <= 0) {
+                faded = false;
+                k = 0;
+            }
+        }
+
+        whisper.setVolume(((modifier*k)/fadeVal) * ((double)config.accessibilitySettings.bygonesWhispers/100));
+        
+        visorHandle(godEntity);
+        halo.setRotation(new Vec3d(-20, godYaw(), 0)).tick(loc.add(0, 2, 0));
+        glassAura.tick(loc);
+        if (godEntity.isOnGround() && rand.nextInt(5) == 0) glassTrail.tick(); //Ground trail handle
     }
 }

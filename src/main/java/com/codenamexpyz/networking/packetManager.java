@@ -55,22 +55,42 @@ public class packetManager {
                                 new FlareSpellCircle<ParticleEffect>(
                                     new Vec3d(6, 6, 0), ParticleTypes.ENCHANT, new Vec3d(207,181,59), 30, 3, new Vec3d(0, 4, 0), new Vec3d(0, 0, 135)
                                 )
-                            ), 1.1, 0.2
+                            ), 1.1, 0.2, 100
+                        )
+                    );
+                    SpellManager.addreticule(
+                        new FlareSpellCircleReticule(
+                            List.of(
+                                new FlareSpellCircle<ParticleEffect>(
+                                    new Vec3d(6, 6, 0), ParticleTypes.ENCHANT, new Vec3d(255, 165, 0), 30, 3, new Vec3d(0, 4, 0), new Vec3d(0, 0, -135)
+                                ),
+                                new FlareSpellCircle<ParticleEffect>(
+                                    new Vec3d(6, 6, 0), ParticleTypes.ENCHANT, new Vec3d(207,181,59), 30, 3, new Vec3d(0, 4, 0), new Vec3d(0, 0, -135)
+                                ),
+                                new FlareSpellCircle<ParticleEffect>(
+                                    new Vec3d(6, 6, 0), ParticleTypes.ENCHANT, new Vec3d(255, 165, 0), 30, 3, new Vec3d(0, 4, 0), new Vec3d(0, 0, -135)
+                                )
+                            ), 1.1, 0.2, 100
                         )
                     );
                     break;
                 case "DoubleJump":
                     if (!config.playerPacketSettings.toggleDoubleRender) break;
                     Random random = new Random();
+
+                    List<Color> colors = List.of(Color.CYAN, Color.WHITE);
+
+                    int colorChoice = random.nextInt(2);
+
                     switch (random.nextInt(3)) { //So many switches
                         case 0:
-                            SpellManager.addShape(new Square(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
+                            SpellManager.addShape(new Square(new Vector3f(payload.playerPos()), colors.get(colorChoice), 1f, 3f));
                             break;
                         case 1:
-                            SpellManager.addShape(new Triangle(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
+                            SpellManager.addShape(new Triangle(new Vector3f(payload.playerPos()), colors.get(colorChoice), 1f, 3f));
                             break;
                         default:
-                            SpellManager.addShape(new Pentagon(new Vector3f(payload.playerPos()), Color.RED, 4f, 3f));
+                            SpellManager.addShape(new Pentagon(new Vector3f(payload.playerPos()), colors.get(colorChoice), 1f, 3f));
                             break;
                     }
                     StaticParticles.ParticleJet(new Vec3d(new Vector3f(payload.playerPos())), List.of(ParticleTypes.CLOUD), null, 50, 20);
@@ -84,7 +104,8 @@ public class packetManager {
 
         PayloadTypeRegistry.playS2C().register(spellTickPayloadS2C.id, spellTickPayloadS2C.CODEC);
         ClientPlayNetworking.registerGlobalReceiver(spellTickPayloadS2C.id, (payload, context) -> { 
-            switch (payload.spellName()) {
+            String spellName = new String(payload.spellName());
+            switch (spellName) {
                 case "Flare":
                     for (FlareSpellCircleReticule ret : SpellManager.getFlareReticules()) {
                         ret.updateData(new Vec3d(payload.raytracePos().x, payload.raytracePos().y, payload.raytracePos().z));

@@ -14,42 +14,19 @@ import net.minecraft.util.math.Vec3d;
 import com.codenamexpyz.objects.ParticleAura;
 import com.codenamexpyz.utils.Rotator;
 
-import static com.codenamexpyz.ArcadiaParticlesClient.config;
 import static com.codenamexpyz.ArcadiaParticlesClient.mc;
 
-public class earth {
+public class earth extends GodBase {
     //Particle collection
-    private static final List<ParticleEffect> particleList = Arrays.asList(ParticleTypes.SPORE_BLOSSOM_AIR, ParticleTypes.SPORE_BLOSSOM_AIR);
+    private final List<ParticleEffect> particleList = Arrays.asList(ParticleTypes.SPORE_BLOSSOM_AIR, ParticleTypes.SPORE_BLOSSOM_AIR);
 
     //Objects used. Only needs to be declaired once for ticking sake.
-    private static ParticleAura earthAura;
+    private ParticleAura earthAura = new ParticleAura(loc, new Vec3d(3, 4, 3), new Vec3d(0, 0.21, 0), particleList, uniqueColorAura(loc, godEntity), 1000000);
 
     //Obrit counter
-    private static double count = 0;
+    private double count = 0;
 
-    public static void triggerParticles(List<PlayerEntity> viewerList, PlayerEntity godEntity) {
-        Vec3d loc = godEntity.getPos();
-
-        earthAura = new ParticleAura(loc, new Vec3d(3, 4, 3), new Vec3d(0, 0.21, 0), particleList, uniqueColorAura(loc, godEntity), 1000000);
-
-        if (config.godSettings.toggleEarth) {
-            for (PlayerEntity player : viewerList) { //This needs to be made more efficient, I will do it some year.
-                if (player.getName().getLiteralString().equals(godEntity.getName().getString())) {
-                    earthAura.tick();
-
-                    orbit(loc, ParticleTypes.FLAME, godEntity.getYaw(), 1, 180, false, false);
-                    orbit(loc, ParticleTypes.RAIN, godEntity.getYaw(), 1, 0, false, false);
-                    orbit(loc, ParticleTypes.ASH, godEntity.getYaw(), 1, 180, false, true);
-                    orbit(loc, ParticleTypes.WAX_ON, godEntity.getYaw(), 1, 0, false, true);
-
-                    count++;
-                    count = count % 360;
-                }
-            }
-        }
-    }
-
-    private static List<Vec3d> uniqueColorAura(Vec3d loc, PlayerEntity godEntity) {
+    private List<Vec3d> uniqueColorAura(Vec3d loc, PlayerEntity godEntity) {
         double gModP2O = Math.max(Math.min(((loc.getY() + 64)*17)/192, 17), 0); //Green transfer
         double bModP2O = Math.max(Math.min(((loc.getY() + 64)*193)/192, 193), 0); //Blue transfer
 
@@ -64,7 +41,7 @@ public class earth {
         return Arrays.asList(new Vec3d(255/255,(165+gModP2O)/255,bModP2O/255), new Vec3d((255-modG2R)/255,modG2R/255,0));// Pink to orange, green to red
     }
 
-    private static void orbit(Vec3d loc, ParticleEffect particleType, double yaw, double radius, double degOffset, boolean invert, boolean rotCircle) { //This is a unique case, must stay.
+    private void orbit(Vec3d loc, ParticleEffect particleType, double yaw, double radius, double degOffset, boolean invert, boolean rotCircle) { //This is a unique case, must stay.
         double angle = (invert) ? Math.toRadians(count + degOffset) : -Math.toRadians(count + degOffset);
         double xOffset = Math.cos(angle) * radius/2;
         double zOffset = Math.sin(angle) * radius/1.5;
@@ -82,5 +59,18 @@ public class earth {
 
         Particle particle = mc.particleManager.addParticle(particleType, particleX, particleY, particleZ, 0, 0, 0);
         particle.setMaxAge(3);
+    }
+
+    @Override
+    protected void godEffect(PlayerEntity player) {
+        earthAura.setColors(uniqueColorAura(loc, godEntity)).tick(loc);
+
+        orbit(loc, ParticleTypes.FLAME, -godYaw(), 1, 180, false, false);
+        orbit(loc, ParticleTypes.RAIN, -godYaw(), 1, 0, false, false);
+        orbit(loc, ParticleTypes.ASH, -godYaw(), 1, 180, false, true);
+        orbit(loc, ParticleTypes.WAX_ON, -godYaw(), 1, 0, false, true);
+
+        count++;
+        count = count % 360;
     }
 }

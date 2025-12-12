@@ -33,7 +33,7 @@ public class StarParticle <T extends ParticleEffect> {
         }
 
         Particle particle = mc.particleManager.addParticle(centerParticle, location.x, location.y, location.z, 0, 0, 0);
-        particle.setMaxAge(1);
+        particle.setMaxAge(4);
         particle.scale(0.125f);
     }
 

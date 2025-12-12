@@ -6,35 +6,38 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.util.math.Vec3d;
 
 public class FlareSpellCircleReticule {
-    List<FlareSpellCircle<? extends ParticleEffect>> flareCircles;
-    double sizeCoeff;
-    double velocCoeff;
-    double initRadius; //Initial radius
+    private List<FlareSpellCircle<? extends ParticleEffect>> flareCircles;
+    private double sizeCoeff;
+    private double velocCoeff;
+    private double initRadius; //Initial radius
 
     private Vec3d raytraceResult = Vec3d.ZERO;
     private int count;
+    private int spellLength;
 
-    public FlareSpellCircleReticule(List<FlareSpellCircle<? extends ParticleEffect>> flareCircles, double sizeCoeff, double velocCoeff) {
+    public FlareSpellCircleReticule(List<FlareSpellCircle<? extends ParticleEffect>> flareCircles, double sizeCoeff, double velocCoeff, int spellLength) {
         this.flareCircles = flareCircles;
         this.sizeCoeff = sizeCoeff;
         this.velocCoeff = velocCoeff;
         this.initRadius = flareCircles.getFirst().radius;
         this.count = 0;
+        this.spellLength = spellLength;
     }
 
     public FlareSpellCircleReticule updateData(Vec3d raytraceResult) {
         this.raytraceResult = raytraceResult;
-        return this;
-    }
-
-    public boolean tick() {
-        if (count >= 100) {
-            return true;
-        };
 
         spawnParticle(count);
 
         count++;
+
+        return this;
+    }
+
+    public boolean tick() {
+        if (count >= spellLength) {
+            return true;
+        };
         return false;
     }
 
